@@ -2,11 +2,13 @@ require 'dm-migrations'
 require 'dm-serializer'
 require 'dm-constraints'
 
+
 puts ENV["RACK_ENV"]
-if ENV["RACK_ENV"] == "development"
+configure :development do
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/data.db")
 end
-if ENV["RACK_ENV"] == "production"
+configure :production do
+    require 'newrelic_rpm'
     DataMapper.setup(:default, ENV['DATABASE_URL'] )
 end
     
