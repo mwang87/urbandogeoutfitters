@@ -11,7 +11,7 @@ end
 configure :production do
     require 'newrelic_rpm'
     DataMapper.setup(:default, ENV['DATABASE_URL'] )
-    set :current_url, 'http://channelflipper.herokuapp.com/'
+    set :current_url, 'http://urbandogeoutfitters.herokuapp.com/'
 end
     
 class Picture
