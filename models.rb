@@ -6,23 +6,23 @@ require 'dm-constraints'
 puts ENV["RACK_ENV"]
 configure :development do
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/data.db")
+    set :current_url, 'http://localhost:9292/'
 end
 configure :production do
     require 'newrelic_rpm'
     DataMapper.setup(:default, ENV['DATABASE_URL'] )
+    set :current_url, 'http://channelflipper.herokuapp.com/'
 end
     
-#DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_VIOLET_URL'] || 'postgres://vrsuhllnluwzby:fn7JWeN9MvlJwnQC2IKO0HOpwk@ec2-54-225-101-4.compute-1.amazonaws.com:5432/dbfgk3co86vbss' )
-
 class Picture
     include DataMapper::Resource
     property :id,               Serial
     property :url,              String
     
     has n, :comparisons, :child_key => [ :source_id ]
-    has n, :friends, self, :through => :comparisons, :via => :target
+    has n, :ratings, self, :through => :comparisons, :via => :target
     
-    belongs_to :fashionableuser
+    belongs_to :user
 end
 
 class Comparison
@@ -30,28 +30,28 @@ class Comparison
     property :id,               Serial
     property :comparisonvalue,  String
     
-    belongs_to :source, 'Picture', :key => true
-    belongs_to :target, 'Picture', :key => true
+    belongs_to :source, 'Picture'
+    belongs_to :target, 'Picture'
     
-    belongs_to :fashionableuser
+    belongs_to :user
 end
 
 
-class Fashionableuser
+class User
     include DataMapper::Resource
     
     property :googleuniqueid,   String, :key => true
     property :googleemail,      String
     property :useralias,        String
     
-    has n, :picture
-    has n, :comparison
+    has n, :pictures
+    has n, :comparisons
 end
 
 
 DataMapper.finalize
 Picture.auto_migrate! unless Picture.storage_exists?
 Comparison.auto_migrate! unless Comparison.storage_exists?
-Fashionableuser.auto_migrate! unless Fashionableuser.storage_exists?
+User.auto_migrate! unless User.storage_exists?
 DataMapper.auto_upgrade!
 
