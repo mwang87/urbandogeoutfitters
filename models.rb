@@ -2,8 +2,14 @@ require 'dm-migrations'
 require 'dm-serializer'
 require 'dm-constraints'
 
-puts ENV
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/data.db")
+puts ENV["RACK_ENV"]
+if ENV["RACK_ENV"] == "development"
+    DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/data.db")
+end
+if ENV["RACK_ENV"] == "production"
+    DataMapper.setup(:default, ENV['DATABASE_URL'] )
+end
+    
 #DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_VIOLET_URL'] || 'postgres://vrsuhllnluwzby:fn7JWeN9MvlJwnQC2IKO0HOpwk@ec2-54-225-101-4.compute-1.amazonaws.com:5432/dbfgk3co86vbss' )
 
 class Picture
