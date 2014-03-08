@@ -58,7 +58,7 @@ post "/votepicture/:pictureid" do
     
     picture_id = params[:pictureid]
     
-    picture_vote = Picturevotes.new
+    picture_vote = Picturevote.new
     
     picture_vote.user_googleuniqueid = @user_info['sub']
     picture_vote.picture_id = picture_id
