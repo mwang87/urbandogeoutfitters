@@ -13,14 +13,14 @@ configure :production do
     DataMapper.setup(:default, ENV['DATABASE_URL'] )
     set :current_url, 'http://urbandogeoutfitters.herokuapp.com/'
 end
+
+DataMapper::Property::String.length(1024)
     
 class Picture
     include DataMapper::Resource
     property :id,               Serial
     property :url,              String
     
-    #has n, :comparisons, :child_key => [ :source_id ]
-    #has n, :ratings, self, :through => :comparisons, :via => :target
     has n, :picturevotes
     
     belongs_to :user
@@ -29,13 +29,9 @@ end
 class Picturevote
     include DataMapper::Resource
     property :id,               Serial
-    #property :comparisonvalue,  String
     
-    #belongs_to :source, 'Picture'
-    #belongs_to :target, 'Picture'
-    
-    belongs_to :picture, :key => true
-    belongs_to :user,    :key => true
+    belongs_to :picture
+    belongs_to :user
 end
 
 

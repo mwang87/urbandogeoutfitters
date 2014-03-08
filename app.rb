@@ -22,6 +22,8 @@ end
 post "/upload" do
     @user_info = get_user_info()
     
+    puts params
+    
     if @user_info == nil
         redirect '/login'
     end
@@ -35,6 +37,10 @@ post "/upload" do
     user_picture = Picture.new
     user_picture.url = picture_url
     user_picture.user_googleuniqueid = @user_info['sub']
+    
+    puts user_picture.url
+    puts user_picture.user_googleuniqueid
+    puts user_picture.id
     
     if user_picture.save
         puts "SAVED"
