@@ -23,6 +23,19 @@ get '/user' do
 end
 
 
+#View User Images
+get '/user/pictures' do
+    @user_info = get_user_info()
+    if @user_info == nil
+        redirect '/login'
+    end
+    
+    dbuser = User.first({:googleuniqueid => @user_info['sub'] })
+    @user_pictures = dbuser.pictures
+    
+    erb :userpictures
+end
+
 #Creates and returns user
 def create_user(user_id, user_email)
     

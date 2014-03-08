@@ -1,9 +1,19 @@
 
         
 Update User Info
-<div style="position: relative;margin-left: auto ;margin-right: auto ;top:40px">
+<div>
     <form action="/user" method="post">
         Name: <input type="text" name="useralias" value="<%=@user_info['useralias']%>"><br>
         <input type="submit" value="Submit">
     </form>
 </div>
+
+
+<div id="upload_box">
+<form action="/upload" method="post">
+Picture URL <input type="text" name="pictureURL"><br>
+<input type="submit" value="Submit">
+</form>
+</div>
+
+<a href="/user/pictures"> my pictures </a>

@@ -1,0 +1,32 @@
+<script src="/js/jquery.js"></script>
+
+<% if @user_info != nil %>
+    <%= @user_info['useralias'] %>
+    <div id="user_account"><form action="/user"><input type="submit" value="User Account"></form></div>
+    <div id="loginlogout_button">
+    <%= '<form action="/logout"><input type="submit" value="Logout"></form>' %>
+    </div>
+<% else %>
+    <div id="loginlogout_button">
+    <%= '<form action="/login"><input type="submit" value="Login"></form>' %>
+    </div>
+<% end %>
+
+
+
+<% @comparison_pictures.each { |picture| %>
+    <img src="<%= picture.url  %>" onclick="votepicture(<%=picture.id%>)">
+<%}%>
+
+
+<script>
+    function votepicture(picture_id){
+        $.ajax({
+            type: "POST",
+            url: "/votepicture/" + picture_id,
+            success: function(result){
+                console.log(result);
+            }
+        });
+    }
+</script>

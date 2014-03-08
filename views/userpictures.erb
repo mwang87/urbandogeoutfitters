@@ -1,0 +1,4 @@
+<% @user_pictures.each { |picture| %>
+<img src="<%= picture.url  %>" >
+Votes: <%= picture.picturevotes.length.to_s %>
+<%}%>
