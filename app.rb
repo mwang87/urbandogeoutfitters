@@ -58,7 +58,10 @@ post "/votepicture/:pictureid" do
     
     picture_id = params[:pictureid]
     
-    picture_vote = Picturevote.new
+    picture_vote = Picturevote.first_or_create({:user_googleuniqueid => @user_info['sub'], :picture_id => picture_id}, {
+                                                                                                                       :user_googleuniqueid => @user_info['sub'],
+                                                                                                                       :picture_id => picture_id
+                                                                                                                        })
     
     picture_vote.user_googleuniqueid = @user_info['sub']
     picture_vote.picture_id = picture_id
