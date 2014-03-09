@@ -19,6 +19,9 @@ get "/" do
     
     @comparison_picture1, @comparison_picture2 = get_random_comparison_pictures(@user_info['sub'])
     
+    
+    @comparison_instance = create_comparison_instance()
+    
     erb :homepage
 end
 
@@ -62,6 +65,24 @@ post "/votepicture" do
     if @user_info == nil
         redirect '/login'
     end
+    
+    instance_hash = params[:instancehash]
+    instance_object = Comparisoninstance.first(:instancehash => instance_hash)
+    
+    if instance_object == nil
+        return "NOT RATED, NO INSTANCE"
+    end
+    if instance_object.usedup == 1
+        return "NOT RATED, INSTANCE USED"
+    end
+    instance_object.usedup = 1
+    if instance_object.save
+        print "UPDATED INSTANCE"
+    else
+        print "FAILED UPDATE INSTANCE"
+    end
+    
+    
     
     upvote_id = params[:upvote]
     downvote_id = params[:downvote]

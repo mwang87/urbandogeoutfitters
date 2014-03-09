@@ -12,18 +12,18 @@
     </div>
 <% end %>
 
-<img src="<%= @comparison_picture1.url  %>" onclick="votepicture(<%=@comparison_picture1.id%>, <%=@comparison_picture2.id%>)">
-<img src="<%= @comparison_picture2.url  %>" onclick="votepicture(<%=@comparison_picture2.id%>, <%=@comparison_picture1.id%>)">
+<img src="<%= @comparison_picture1.url  %>" onclick="votepicture(<%=@comparison_picture1.id%>, <%=@comparison_picture2.id%>, <%=@comparison_instance.instancehash%>)">
+<img src="<%= @comparison_picture2.url  %>" onclick="votepicture(<%=@comparison_picture2.id%>, <%=@comparison_picture1.id%>, <%=@comparison_instance.instancehash%>)">
 
 
 
 
 <script>
-    function votepicture(upvote_id, downvote_id){
+    function votepicture(upvote_id, downvote_id, instancehash){
         $.ajax({
             type: "POST",
             url: "/votepicture",
-            data: "&upvote=" + upvote_id + "&downvote=" + downvote_id,
+            data: "&upvote=" + upvote_id + "&downvote=" + downvote_id + "&instancehash=" + instancehash,
             success: function(result){
                 console.log(result);
                 alert(result);
