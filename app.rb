@@ -14,7 +14,7 @@ get "/" do
     @user_info = get_user_info()
     
     if @user_info == nil
-        redirec '/login'
+        redirect '/login'
     end
     
     @comparison_picture1, @comparison_picture2 = get_random_comparison_pictures(@user_info['sub'])
