@@ -1,4 +1,5 @@
 <% @user_pictures.each { |picture| %>
 <img src="<%= picture.url  %>" >
-Votes: <%= picture.picturevotes.length.to_s %>
+Up Votes: <%= picture.picturevotes(:updown => 1).length.to_s %>
+Down Votes: <%= picture.picturevotes(:updown => 0).length.to_s %>
 <%}%>

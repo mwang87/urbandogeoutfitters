@@ -13,7 +13,7 @@ set :session_secret, 'super secret2'
 get "/" do
     @user_info = get_user_info()
     
-    @comparison_pictures = get_random_comparison_pictures()
+    @comparison_picture1, @comparison_picture2 = get_random_comparison_pictures(@user_info['sub'])
     
     erb :homepage
 end
@@ -51,35 +51,45 @@ post "/upload" do
     redirect "/user"
 end
 
-get "/rateperson" do
-    "RATE RANDOM"
-end
 
-post "/votepicture/:pictureid" do
+post "/votepicture" do
     @user_info = get_user_info()
     
     if @user_info == nil
         redirect '/login'
     end
     
-    picture_id = params[:pictureid]
+    upvote_id = params[:upvote]
+    downvote_id = params[:downvote]
     
-    picture_vote = Picturevote.first_or_create({:user_googleuniqueid => @user_info['sub'], :picture_id => picture_id}, {
-                                                                                                                       :user_googleuniqueid => @user_info['sub'],
-                                                                                                                       :picture_id => picture_id
-                                                                                                                        })
+    upvote_vote = Picturevote.new
+    upvote_vote.user_googleuniqueid = @user_info['sub']
+    upvote_vote.picture_id = upvote_id 
+    upvote_vote.updown = 1
     
-    picture_vote.user_googleuniqueid = @user_info['sub']
-    picture_vote.picture_id = picture_id
     
-    if picture_vote.save
-        print "SAVED"
+    if upvote_vote.save
+       print "SAVED"
     else
-        print "NOT SAVED"
+       print "NOT SAVED"
     end
     
+    downvote_vote = Picturevote.new
+    downvote_vote.user_googleuniqueid = @user_info['sub']
+    downvote_vote.picture_id = downvote_id 
+    downvote_vote.updown = 0
+
+    
+    if downvote_vote.save
+       print "SAVED"
+    else
+       print "NOT SAVED"
+    end
+    
+
     "RATING RECEIVED"
 end
+
 
 
 

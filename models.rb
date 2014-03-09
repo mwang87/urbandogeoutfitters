@@ -29,9 +29,18 @@ end
 class Picturevote
     include DataMapper::Resource
     property :id,               Serial
+    property :updown,           Integer #0 for down 1 for up
     
     belongs_to :picture
     belongs_to :user
+end
+
+class Comparisoninstance
+    include DataMapper::Resource
+    property :id,               Serial
+    property :instancehash,     String
+    property :usedup,           Integer
+
 end
 
 
@@ -50,5 +59,6 @@ DataMapper.finalize
 Picture.auto_migrate! unless Picture.storage_exists?
 Picturevote.auto_migrate! unless Picturevote.storage_exists?
 User.auto_migrate! unless User.storage_exists?
+Comparisoninstance.auto_migrate! unless Comparisoninstance.storage_exists?
 DataMapper.auto_upgrade!
 
