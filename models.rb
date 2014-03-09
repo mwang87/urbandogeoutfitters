@@ -20,6 +20,8 @@ class Picture
     include DataMapper::Resource
     property :id,               Serial
     property :url,              String
+    property :title,              String
+    property :description,      Text
     
     has n, :picturevotes
     
