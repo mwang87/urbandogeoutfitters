@@ -1,0 +1,59 @@
+!!! Strict
+%html
+	%head
+		%title Urban Dogefitters
+		// Bootstrap core CSS
+		%link{:href=>"css/bootstrap.css", :rel=>"stylesheet"}
+
+		// Custom Google Web Font
+		%link{:href=>"font-awesome/css/font-awesome.min.css", :rel=>"stylesheet"}
+		%link{:href=>'http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic', :rel=>'stylesheet', :type=>'text/css'}
+
+		// Add custom CSS here
+		%link{:href=>"css/landing-page.css", :rel=>"stylesheet"}
+		%link{:href=>"css/portfolio-item.css", :rel=>"stylesheet"}
+
+%body
+	%nav.navbar.navbar-fixed-top.navbar-inverse{:role=>"navigation"}
+		.container
+			.navbar-header
+				%button.navbar-toggle{:type=>"button", "data-toggle"=>"collapse", "data-target"=>".navbar-ex1-collapse"}
+					%span.sr-only Toggle navigation
+					%span.icon-bar
+					%span.icon-bar
+					%span.icon-bar
+				%a.navbar-brand{:href=>"/"} Urban Dogefitters
+
+			// nav links
+			.collapse.navbar-collapse.navbar-right.navbar-ex1-collapse
+				%ul.nav.navbar-nav
+					%li
+						%a{:href=>"#about"} About
+					%li
+						%a{:href=>"#services"} Services
+					%li
+						%a{:href=>"#contact"} Contact
+
+	= yield
+
+	%footer
+		.container
+			.row
+				.col-lg-12
+					%ul.list-inline
+						%li
+							%a{:href=>"#home"} Home
+						%li.footer-menu-divider &sdot;
+						%li
+							%a{:href=>"#about"} About
+						%li.footer-menu-divider &sdot;
+						%li
+							%a{:href=>"#services"} Services
+						%li.footer-menu-divider &sdot;
+						%li
+							%a{:href=>"#contact"} Contact
+						%p.copyright.text-muted.small Copyright &copy; Urban Dogefitters 2013. All Rights Reserved
+
+// JavaScript
+%script{:src=>"js/jquery-1.11.0.js"}
+%script{:src=>"js/bootstrap.js"}

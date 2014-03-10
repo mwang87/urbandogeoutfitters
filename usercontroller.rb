@@ -1,10 +1,6 @@
 #Update
 post '/user' do
-    @user_info = get_user_info()
-    
-    if @user_info == nil
-        redirect '/login'
-    end
+    @user_info = isUserLoggedIn()
     
     puts params[:useralias]
     update_user(@user_info['sub'], params[:useralias])
@@ -14,21 +10,24 @@ end
    
 #GET View User
 get '/user' do
-    @user_info = get_user_info()
-    if @user_info == nil
-        redirect '/login'
-    end
+    @user_info = isUserLoggedIn()
+
     puts @user_info
-    erb :user
+
+    dbuser = User.first({:googleuniqueid => @user_info['sub'] })
+    @user_pictures = dbuser.pictures
+
+    if(@user_pictures == nil)
+        @user_pictures = []
+    end
+
+    haml :profile
 end
 
 
 #View User Images
 get '/user/pictures' do
-    @user_info = get_user_info()
-    if @user_info == nil
-        redirect '/login'
-    end
+    @user_info = isUserLoggedIn()
     
     dbuser = User.first({:googleuniqueid => @user_info['sub'] })
     @user_pictures = dbuser.pictures

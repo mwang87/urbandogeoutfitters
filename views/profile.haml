@@ -1,0 +1,38 @@
+.container
+
+    .row
+
+        .col-lg-12
+            %h1.page-header
+                #{@user_info['useralias']}
+                %small San Francisco, CA
+            %p
+                %form{:action=>"/upload", :method=>"post"}
+                    Picture URL 
+                    %input{:type=>"text", :name=>"pictureURL"}
+                    %input{:type=>"submit", :value=>"Submit"}
+            %p
+                %a{:href=>"/vote"} Go Vote!
+
+    .row
+
+        .col-md-8
+            %img.img-responsive{:src=> "/img/mostrecent.jpg"}
+
+        .col-md-4
+            %h3 A Summer Outfit with Flare
+            %ul
+                %li T-Shirt: White Tee from a thrift store
+                %li Chinos: Khaki Gingham Chinos from Bonobos 
+                %li Belt: Brown Leather Belt from Uniqlo
+                %li Shoes: Grey Hightops from Converse
+
+    .row
+
+        .col-lg-12
+            %h3.page-header Other Outfits
+
+        - @user_pictures.each do |picture|
+            .col-sm-3.col-xs-6
+                %a{:href=>"#"}
+                    %img.img-responsive.portfolio-item{:src=>"#{picture.url}"}

@@ -18,7 +18,7 @@ get '/login' do
         redirect '/oauth2authorize'
     end
     
-    redirect '/'
+    redirect '/user'
 end
 
 get '/logout' do
@@ -77,7 +77,7 @@ get '/oauth2callback' do
         
     
     params[:code]
-    redirect '/'
+    redirect '/user'
 end
 
 

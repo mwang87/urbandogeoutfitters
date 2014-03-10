@@ -1,0 +1,39 @@
+.container
+
+	.row
+
+		.col-lg-6.col-md-6.portfolio-item
+			.vote-item
+				%a{:href=>"#"}
+					%img.resize_fit_center.shadow{:src=>"#{@comparison_picture1.url}", :onclick=>'votepicture(' + "#{@comparison_picture1.id}" + ',' + "#{@comparison_picture2.id}" + ',' + "'#{@comparison_instance.instancehash}'" +')'}
+			%h3 A Summer Outfit with Flare
+			%ul
+				%li T-Shirt: White Tee from a thrift store
+				%li Chinos: Khaki Gingham Chinos from Bonobos 
+				%li Belt: Brown Leather Belt from Uniqlo
+				%li Shoes: Grey Hightops from 
+
+		.col-lg-6.col-md-6.portfolio-item
+			.vote-item
+				%a{:href=>"#"}
+					%img.resize_fit_center.shadow{:src=>"#{@comparison_picture1.url}", :onclick=>'votepicture(' + "#{@comparison_picture1.id}" + ',' + "#{@comparison_picture2.id}" + ',' + "'#{@comparison_instance.instancehash}'" +')'}
+			%h3 A Summer Outfit with Flare
+			%ul
+				%li T-Shirt: White Tee from a thrift store
+				%li Chinos: Khaki Gingham Chinos from Bonobos 
+				%li Belt: Brown Leather Belt from Uniqlo
+				%li Shoes: Grey Hightops from Converse
+
+:javascript
+	function votepicture(upvote_id, downvote_id, instancehash){
+		$.ajax({
+			type: "POST",
+			url: "/votepicture",
+			data: "&upvote=" + upvote_id + "&downvote=" + downvote_id + "&instancehash=" + instancehash,
+			success: function(result){
+				console.log(result);
+				alert(result);
+				window.location.assign("/vote");
+			}
+		});
+	}

@@ -4,37 +4,38 @@ require './models'
 require './userauth'
 require './usercontroller'
 require './ratinghelper'
+require './loginhelper'
 
 user_configure();
 
 enable :sessions
 set :session_secret, 'super secret2'
 
+
 get "/" do
-    @user_info = get_user_info()
-    
-    if @user_info == nil
-        redirect '/login'
+    if session[:access_token] != nil
+        redirect '/user'
     end
-    
+
+    haml :index  
+end
+
+
+get "/vote" do
+    @user_info = isUserLoggedIn()
+
     @comparison_picture1, @comparison_picture2 = get_random_comparison_pictures(@user_info['sub'])
     
     
     @comparison_instance = create_comparison_instance()
     
-    erb :homepage
+    haml :vote
 end
 
 
-post "/upload" do
-    @user_info = get_user_info()
-    
-    puts params
-    
-    if @user_info == nil
-        redirect '/login'
-    end
-    
+post "/upload" do  
+    @user_info = isUserLoggedIn()
+
     picture_url = params[:pictureURL]
     
     if picture_url == nil
@@ -59,13 +60,9 @@ post "/upload" do
 end
 
 
-post "/votepicture" do
-    @user_info = get_user_info()
-    
-    if @user_info == nil
-        redirect '/login'
-    end
-    
+post "/votepicture" do  
+    @user_info = isUserLoggedIn()
+
     instance_hash = params[:instancehash]
     instance_object = Comparisoninstance.first(:instancehash => instance_hash)
     
