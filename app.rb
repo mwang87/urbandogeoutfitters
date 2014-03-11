@@ -13,7 +13,7 @@ set :session_secret, 'super secret2'
 
 
 get "/" do
-    if session[:access_token] != nil
+    if session[:googleemail] != nil
         redirect '/user'
     end
 
